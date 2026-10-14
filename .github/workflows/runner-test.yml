@@ -1,24 +1,43 @@
-name: Windows Runner Test
+name: Windows Runner Tools Test
 
 on:
   push:
-    branches: ["feature/**"]
+    branches:
+      - "feature/**"
   workflow_dispatch:
 
 permissions:
   contents: read
 
 jobs:
-  runner-test:
+  tools-test:
+    name: Verify DevSecOps Tools
     runs-on: [self-hosted, Windows, X64]
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-      - name: Verify Runner
+      - name: Verify Terraform
         shell: powershell
-        run: |
-          Write-Host "Windows runner is working"
-          $env:COMPUTERNAME
-          $PSVersionTable.PSVersion
-          git --version
+        run: terraform -version
+
+      - name: Verify TFLint
+        shell: powershell
+        run: tflint --version
+
+      - name: Verify tfsec
+        shell: powershell
+        run: tfsec --version
+
+      - name: Verify Gitleaks
+        shell: powershell
+        run: gitleaks version
+
+      - name: Verify Checkov
+        shell: powershell
+        run: checkov --version
+
+      - name: Verify Infracost
+        shell: powershell
+        run: infracost --version
