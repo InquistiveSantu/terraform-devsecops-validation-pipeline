@@ -39,3 +39,6 @@ Thumbs.db
 # Reports (generated during pipeline execution)
 reports/**/*
 !reports/**/.gitkeep
+
+
+terraform/.infracost/
